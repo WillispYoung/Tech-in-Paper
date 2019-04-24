@@ -1,17 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-"""
-    This document servers as an implementation of Ping-Pair Proposed in 
-    [Informed Bandwidth Adaptation in Wi-Fi Networks using Ping-Pair][CoNEXT'17].
-
-    Version: Python 2.7 [Needs migration]
-    Author: Willisp Young
-    StartDate: 2019-03-15
-
-    Below exhibits implementation targeted for Python 2.7
-    Incompatibility problems might occur when immigrating to Python 3.x.
-"""
-
 import os
 import sys
 import socket
