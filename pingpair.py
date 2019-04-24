@@ -3,9 +3,13 @@
 """
     This document servers as an implementation of Ping-Pair Proposed in 
     [Informed Bandwidth Adaptation in Wi-Fi Networks using Ping-Pair][CoNEXT'17].
-    
+
+    Version: Python 2.7 [Needs migration]
     Author: Willisp Young
     StartDate: 2019-03-15
+
+    Below exhibits implementation targeted for Python 2.7
+    Incompatibility problems might occur when immigrating to Python 3.x.
 """
 
 import os
@@ -27,7 +31,6 @@ else:
 ICMP_ECHO_REQUEST = 8 # Seems to be the same on Solaris.
 
 
-# 如何
 def checksum(source_string):
     """
     I'm not too confident that this is right but testing seems
@@ -122,15 +125,9 @@ def do_one(dest_addr, timeout):
     icmp = socket.getprotobyname("icmp")
     try:
         my_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, icmp)
-    except socket.error, (errno, msg):
-        if errno == 1:
-            # Operation not permitted
-            msg = msg + (
-                " - Note that ICMP messages can only be sent from processes"
-                " running as root."
-            )
-            raise socket.error(msg)
-        raise # raise the original error
+    except socket.error as error:
+        print(error)
+        exit(1)
 
     my_ID = os.getpid() & 0xFFFF
 
@@ -146,20 +143,20 @@ def verbose_ping(dest_addr, timeout = 2, count = 4):
     Send >count< ping to >dest_addr< with the given >timeout< and display
     the result.
     """
-    for i in xrange(count):
-        print "ping %s..." % dest_addr,
+    for i in range(count):
+        print("ping %s..." % dest_addr),
         try:
             delay  =  do_one(dest_addr, timeout)
-        except socket.gaierror, e:
-            print "failed. (socket error: '%s')" % e[1]
+        except socket.gaierror as e:
+            print("failed. (socket error: '%s')" % e.filename)
             break
 
-        if delay  ==  None:
-            print "failed. (timeout within %ssec.)" % timeout
+        if not delay:
+            print("failed. (timeout within %ssec.)" % timeout)
         else:
             delay  =  delay * 1000
-            print "get ping in %0.4fms" % delay
-    print
+            print("get ping in %0.4fms" % delay)
+    print()
 
 
 if __name__ == '__main__':

@@ -4,30 +4,34 @@
 
     Author: Willisp Young
     StartDate: 2019-03-15
+
+    For implementation of EDNS(0) ECS option, refer to
+    https://github.com/opendns/dnspython-clientsubnetoption.
 """
 
-import dns.resolver
+import dns
+import clientsubnetoption
+from requests import get
 
-resolver = dns.resolver.Resolver()
-resolver.nameservers = ['8.8.8.8', '8.8.4.4']
 
-answers = resolver.query("google.com", "A")
-for data in answers:
-    print data
+def get_external_ip():
+    return get('https://api.ipify.org').text
 
-# baidu.com [with/without nameserver; China/Singapore]
-# 220.181.57.216 (Beijing, Haidian District)
-# 123.125.115.110 (Beijing, Xicheng District)
 
-# google.com
-# Singapore [without nameserver]
-# 172.217.194.100 (Virginia)
-# 172.217.194.138 (Singapore)
-# 172.217.194.113
-# 172.217.194.101
-# 172.217.194.102
-# 172.217.194.139
-# China [without nameserver]
-# 6.6.6.6 (fake)
-# China [with nameserver]
-# 172.217.161.174 (HK)
+cso = clientsubnetoption.ClientSubnetOption(get_external_ip(), 24)
+
+message = dns.message.make_query('baidu.com', 'A')
+message.use_edns(options=[cso])
+r = dns.query.udp(message, '8.8.8.8')
+
+print(r)
+print()
+
+for option in r.options:
+    if isinstance(option, clientsubnetoption.ClientSubnetOption):
+        print(option)
+
+
+# tracert:
+# for youku: results changing over time, cannot access real server.
+# for v.qq.com, iqiyi.com: works fine.
