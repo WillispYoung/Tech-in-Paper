@@ -1,82 +1,28 @@
-import socket
-import random
-import struct
-import time
+import subprocess
 
 
-def create_sender(ttl):
-    s = socket.socket(
-        family=socket.AF_INET,
-        type=socket.SOCK_DGRAM,
-        proto=socket.IPPROTO_UDP
-    )
-
-    s.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
-    return s
-
-
-def create_receiver(port):
-    s = socket.socket(
-        family=socket.AF_INET,
-        type=socket.SOCK_RAW,
-        proto=socket.IPPROTO_ICMP
-    )
-
-    timeout = struct.pack("ll", 5, 0)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_RCVTIMEO, timeout)
-
-    try:
-        s.bind(('', port))
-    except socket.error as e:
-        print(e)
-        raise IOError('Unable to bind receiver socket: {}'.format(e))
-
-    return s
-
-
-def traceroute(domain, hops=30):
-    try:
-        ip_addr = socket.gethostbyname(domain)
-    except socket.error as e:
-        raise IOError('Unable to resolve {}: {}', domain, e)
-
-    text = 'traceroute to {} ({}), {} hops max'.format(domain, ip_addr, hops)
-    print(text)
-
-    ttl = 1
-    lport = random.randint(33434, 33534)
-
+def tracert(domain):
+    p = subprocess.Popen("tracert " + domain, stdout=subprocess.PIPE, bufsize=1)
+    count = 0
+    res = []
     while True:
-        start = time.time()
-        receiver = create_receiver(lport)
-        sender = create_sender(ttl)
-        sender.sendto(b'', (ip_addr, lport))
-
-        # data, addr = receiver.recvfrom(1024)
-        addr = None
-        try:
-            data, addr = receiver.recvfrom(1024)
-        except socket.error as e:
-            print(e)
-            pass
-        finally:
-            receiver.close()
-            sender.close()
-
-        end = time.time()
-        if addr:
-            time_cost = round((end - start) * 1000, 2)
-            print('{:<4} {} {} ms'.format(ttl, addr[0], time_cost))
-            if addr[0] == ip_addr:
-                break
-        else:
-            print('{:<4} *'.format(ttl))
-
-        ttl += 1
-
-        if ttl > hops:
+        line = p.stdout.readline()
+        if not line:
             break
+        # print(line)
+        if count > 3:
+            items = line.split()
+            if len(items) < 3:  # last line is empty line
+                break
+            ip = items[-1]
+            ip = ip.decode("UTF-8")
+            if ip[0] == '[':    # in case domain name is represented
+                ip = ip[1:-1]
+            # print(ip)
+            res.append(ip)
+        count += 1
+    return res
 
 
 if __name__ == "__main__":
-    traceroute("v.qq.com")
+    tracert("apd-4ca339c635848992779008d33f0ee5a5.v.smtcdns.com")
