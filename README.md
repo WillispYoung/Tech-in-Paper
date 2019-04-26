@@ -1,7 +1,7 @@
-###User Quality Improvement Targeted for CDNs
+### User Quality Improvement Targeted for CDNs
 ***
 
-#####1. Get media file URLs from many CP websites (selenium).
+##### 1. Get media file URLs from many CP websites (selenium).
 ***
 
 **v.qq.com**: locate *txpdiv* element with attribute *data-role* set as **txp-ui-console-cdn**, its innerHTML (if not empty) will be CDN server's domain for this web page. 
@@ -10,7 +10,7 @@
 
 **iqiyi.com**:
 
-#####2. Check if ECS is supported for each domain (EDNS).
+##### 2. Check if ECS is supported for each domain (EDNS).
 
 ##### 3. Get suggested replicas from ENDS.
 
