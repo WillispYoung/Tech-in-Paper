@@ -21,12 +21,12 @@ while line:
     line = content.readline()
     count += 1
 
-print(domains)
+# print(domains)
 
 for i in range(len(hops)):
+    print(domains[i])
     for ip in hops[i]:
-        print(ip)
         res, _ = edns(domains[i], 24, ip)
-        print(res)
+        print(ip, res)
     print()
 

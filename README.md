@@ -13,18 +13,23 @@ As conclusion, all these CP websites host their media files on certain CDN serve
 
 ***
 ##### 2. Check if ECS is supported for each domain (EDNS).
+Judging from simple tests, CDNs listed above all support ECS option. Supposedly, local DNS cache might lead to elimination of support in following DNS responses.
 
 ***
 ##### 3. Get suggested replicas from ENDS.
+With URLs of CDN servers acquired, replicas are actually IP list contained in DNS response while resolving these domain names. 
 
 ***
 ##### 4. Trace route these replicas to identify hops along the path.
+Currently, this procedure is conducted by manually type _tracert_ command in terminal. All results are stored in **data** folder, with filename in the form of _traces*.txt_.
 
 ***
 ##### 5. Assimilate each hop to get its suggested replicas.
+Altering _subnet_ field in EDNS packet, then recommended replicas for each hop are contained in each relative EDNS response. Results are stored in **data** folder, with filename in the form of _subnet-assimilation*.txt_.
 
 ***
 ##### 6. Measure link qualities to these replicas.
+Currently ping delay is used as the sole metric to measure link quality, however other metrics might be better (or more accurate). However, with experiments so far, **replicas recommended for each hop are all identical**, which raises another question.
 
 ***
-##### 7. Measure using virtual machines located in different regions.
+##### 7. Measure using virtual machines located in different geographical regions.
