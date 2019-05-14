@@ -56,7 +56,7 @@ Currently ping delay is used as the sole metric to measure
 link quality, however other metrics might be better 
 (or more accurate). However, with experiments so far, 
 **replicas recommended for each hop are all identical**, 
-which raises another question.
+which raises another question (See Question 2).
 
 ***
 ##### 7. Measure using virtual machines located in different geographical regions.

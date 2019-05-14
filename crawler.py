@@ -9,20 +9,20 @@ from selenium.common.exceptions import NoSuchElementException
 # }
 
 option = webdriver.ChromeOptions()
-# option.add_argument("--proxy-server=http://127.0.0.1:3128")
+option.add_argument("--proxy-server=http://119.23.223.231:3128")
 # option.add_argument('--disable-infobars')
 # option.add_experimental_option('excludeSwitches', ['enable-automation'])
 # option.add_extension("ChromeExtensionScrapy.crx")
 # option.add_experimental_option('prefs', prefs)
 
-browser = webdriver.Chrome("C:/Python/chromedriver.exe")
-browser.minimize_window()
+browser = webdriver.Chrome("C:/Python/chromedriver74.exe")
+# browser.minimize_window()
 
 domain = "https://v.qq.com/channel/"
 channels = ["tv", "movie", "variety", "cartoon"]
 # CDNs = []
 
-output = open("v.qq.com-domains.txt", "w")
+output = open("v.qq.com-domains-shenzhen.txt", "w")
 
 for c in channels:
     browser.get(domain + c)
