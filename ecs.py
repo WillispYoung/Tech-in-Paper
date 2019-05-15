@@ -36,5 +36,5 @@ def edns(domain, scope, subnet=None):
 
 
 if __name__ == "__main__":
-    a, _ = edns("apd-82cb731adc411313ffef07c4a1729a0f.v.smtcdns.com", 24)
+    a, _ = edns("apd-f07b0d81a468a7a61f7e8793aa182890.v.smtcdns.com", 24)
     print(a)
