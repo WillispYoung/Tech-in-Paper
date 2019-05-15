@@ -9,7 +9,7 @@ from selenium.common.exceptions import NoSuchElementException
 # }
 
 option = webdriver.ChromeOptions()
-option.add_argument("--proxy-server=http://119.23.223.231:3128")
+# option.add_argument("--proxy-server=http://119.23.223.231:3128")
 # option.add_argument('--disable-infobars')
 # option.add_experimental_option('excludeSwitches', ['enable-automation'])
 # option.add_extension("ChromeExtensionScrapy.crx")
@@ -22,7 +22,7 @@ domain = "https://v.qq.com/channel/"
 channels = ["tv", "movie", "variety", "cartoon"]
 # CDNs = []
 
-output = open("v.qq.com-domains-shenzhen.txt", "w")
+output = open("data/v.qq.com-domains-home.txt", "w")
 
 for c in channels:
     browser.get(domain + c)
