@@ -30,18 +30,20 @@ s3 = set(list3)
 
 print(len(s1), len(s2), len(s3))
 
-overlap = s1.intersection(s2)
-print(len(overlap))
-for url in overlap:
+overlap1 = s1.intersection(s2)
+print(len(overlap1))
+for url in overlap1:
     print(url)
 
-overlap = s2.intersection(s3)
-print(len(overlap))
-for u in overlap:
+overlap2 = s2.intersection(s3)
+print(len(overlap2))
+for u in overlap2:
     print(u)
 
+print(overlap1 == overlap2)
+
 output = open("data/intersection-1.txt", "w")
-for url in overlap:
+for url in overlap2:
     output.write(url + "\n")
 output.close()
 
