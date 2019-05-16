@@ -1,4 +1,5 @@
 import dns.resolver
+from ping3 import ping
 
 # # 1. dns
 # reader = open("data/intersection-1.txt", "r")
@@ -16,26 +17,36 @@ import dns.resolver
 #
 # writer.close()
 
-# 2. check difference
-reader1 = open("data/dns-result-home.txt")
-reader2 = open("data/dns-result-shenzhen.txt")
-dict1 = dict2 = {}
+# # 2. check difference
+# reader1 = open("data/dns-result-home.txt")
+# reader2 = open("data/dns-result-shenzhen.txt")
+# dict1 = dict2 = {}
+#
+# line = reader1.readline()
+# while line:
+#     dict1[line.split()[0]] = line.split()[1]
+#     line = reader1.readline()
+#
+# line = reader2.readline()
+# while line:
+#     dict2[line.split()[0]] = line.split()[1]
+#     line = reader2.readline()
+#
+# count = 0
+# for k in dict1:
+#     print(dict1[k], dict2[k])
+#     if dict1[k] != dict2[k]:
+#         count += 1
+#
+# print(count)
 
-line = reader1.readline()
+# 3. measure CDN quality
+reader = open("data/dns-result-home.txt")
+line = reader.readline()
+
 while line:
-    dict1[line.split()[0]] = line.split()[1]
-    line = reader1.readline()
-
-line = reader2.readline()
-while line:
-    dict2[line.split()[0]] = line.split()[1]
-    line = reader2.readline()
-
-count = 0
-for k in dict1:
-    print(dict1[k], dict2[k])
-    if dict1[k] != dict2[k]:
-        count += 1
-
-print(count)
-
+    line = line.strip()
+    ip = line.split()[1]
+    res = ping(ip)
+    print(res * 1000)
+    line = reader.readline()

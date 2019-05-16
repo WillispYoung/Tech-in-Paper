@@ -100,3 +100,5 @@ used in Beijing and Shenzhen, and they are exactly the same.
 
 结果：
 1. 在北京和深圳进行DNS解析，结果完全相同，并且每个域名只有一个IP。
+同时，ping这些域名发现，在北京ping的结果普遍**小于10ms**，而在深圳，
+延迟则达到了**50ms左右及以上**。
