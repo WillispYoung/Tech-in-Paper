@@ -1,5 +1,12 @@
 import dns.resolver
 from ping3 import ping
+from geoip2 import database
+
+res = dns.resolver.query("valipl.cp31.ott.cibntv.net")
+for ip in res:
+    ip = str(ip)
+    delay = ping(ip) * 1000
+    print(ip, delay)
 
 # # 1. dns
 # reader = open("data/intersection-1.txt", "r")
@@ -41,12 +48,53 @@ from ping3 import ping
 # print(count)
 
 # 3. measure CDN quality
-reader = open("data/dns-result-home.txt")
-line = reader.readline()
+# reader = open("data/youku-dns-result-home.txt")
+# line = reader.readline()
+#
+# while line:
+#     ip = line.strip()
+#     res = ping(ip)
+#     print(res * 1000)
+#     line = reader.readline()
 
-while line:
-    line = line.strip()
-    ip = line.split()[1]
-    res = ping(ip)
-    print(res * 1000)
-    line = reader.readline()
+# # 4. get location of IP address
+# reader = database.Reader("C:/Python/GeoLite2-City.mmdb")
+# data = open("data/dns-result-home.txt")
+# line = data.readline()
+#
+# bj_list = []
+# sz_list = []
+# bj = open("beijing.txt", "w")
+# sz = open("shenzhen.txt", "w")
+#
+# while line:
+#     ip = line.strip().split()[1]
+#     res = reader.city(ip)
+#     if res.city.name:
+#         # print(res.city.name)
+#         if res.city.name == "Beijing":
+#             bj.write(ip + "\n")
+#             bj_list.append(ip)
+#         elif res.city.name == "Shenzhen":
+#             sz.write(ip + "\n")
+#             sz_list.append(ip)
+#     elif res.subdivisions.most_specific.name:
+#         # print(res.subdivisions.most_specific.name)
+#         if res.subdivisions.most_specific.name == "Beijing":
+#             bj_list.append(ip)
+#             bj.write(ip + "\n")
+#         elif res.subdivisions.most_specific.name == "Shenzhen":
+#             sz_list.append(ip)
+#             sz.write(ip + "\n")
+#     else:
+#         # print(res.country.name)
+#         pass
+#     line = data.readline()
+#
+# for ip in bj_list:
+#     print(ping(ip) * 1000)
+#
+# print()
+#
+# for ip in sz_list:
+#     print(ping(ip) * 1000)

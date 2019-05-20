@@ -3,7 +3,7 @@ from ping3 import ping
 
 hops = []
 domains = []
-content = open("data/traces-home.txt", "r")
+content = open("data/youku-traces-home.txt", "r")
 
 count = 0
 line = content.readline()

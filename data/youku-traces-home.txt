@@ -1,0 +1,9 @@
+valipl.cp31.ott.cibntv.net.danuoyi.tbcache.com
+  1     1 ms     1 ms     7 ms  XiaoQiang [192.168.31.1]
+  2     3 ms     2 ms     4 ms  118.247.0.1
+  3    10 ms     7 ms     5 ms  124.205.97.48
+  4    81 ms    12 ms    13 ms  124.205.98.185
+  5     4 ms     4 ms     4 ms  124.207.75.189
+  6   278 ms   134 ms    16 ms  124.207.163.14
+  7    24 ms    13 ms    23 ms  10.240.25.142
+  8   354 ms   256 ms   640 ms  124.200.113.34
